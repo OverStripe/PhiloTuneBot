@@ -1,12 +1,17 @@
 import os
+from dotenv import load_dotenv
 
-API_ID = os.getenv("API_ID") or "YOUR_TELEGRAM_API_ID"
-API_HASH = os.getenv("API_HASH") or "YOUR_TELEGRAM_API_HASH"
-BOT_TOKEN = os.getenv("BOT_TOKEN") or "YOUR_BOT_TOKEN"
-SESSION_NAME = os.getenv("SESSION_NAME") or "YOUR_SESSION_NAME"  # For user account
+# Load environment variables from .env
+load_dotenv()
 
-MONGO_DB_URI = os.getenv("MONGO_DB_URI") or "YOUR_MONGODB_CONNECTION_STRING"
-REDIS_URI = os.getenv("REDIS_URI") or "YOUR_REDIS_SERVER_URI"
+# Convert API_ID to an integer to avoid ValueError
+API_ID = int(os.getenv("API_ID", "0"))  # Default to 0 if not set
+API_HASH = os.getenv("API_HASH", "")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "")
+SESSION_NAME = os.getenv("SESSION_NAME", "")
+
+MONGO_DB_URI = os.getenv("MONGO_DB_URI", "")
+REDIS_URI = os.getenv("REDIS_URI", "")
 
 SUPPORT_CHANNEL = "https://t.me/TechPiroBots"
 DEVELOPER_CONTACT = "https://t.me/PiroWise"
