@@ -1,7 +1,6 @@
 pyrogram
 telethon
-pytgcalls==2.1.0
-tgcalls==2.0.0
+pytgcalls
 yt-dlp
 ffmpeg
 redis
