@@ -1,0 +1,8 @@
+pyrogram
+telethon
+pytgcalls
+yt-dlp
+ffmpeg
+redis
+pymongo
+python-dotenv
