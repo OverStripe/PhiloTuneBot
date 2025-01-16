@@ -4,7 +4,7 @@ from config import SUPPORT_CHANNEL, DEVELOPER_CONTACT
 from modules.leaderboard import get_user_rank
 
 # Define roles
-DEVELOPER_ID = 123456789  # Replace with your Telegram ID
+DEVELOPER_ID = 7222795580  # Replace with your Telegram ID
 
 @Client.on_message(filters.command("me") & filters.private)
 async def user_profile(client, message):
