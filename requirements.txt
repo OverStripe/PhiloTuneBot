@@ -1,6 +1,5 @@
 pyrogram
 telethon
-pytgcalls
 yt-dlp
 ffmpeg
 redis
