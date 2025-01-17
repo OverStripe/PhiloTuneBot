@@ -1,5 +1,5 @@
 from pytgcalls import PyTgCalls
-from pytgcalls.types import StreamType  # ✅ Fixed Import Path
+from pytgcalls.types.stream import StreamAudio  # ✅ Fixed Import Path
 from pytgcalls.types.input_stream import AudioPiped
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -39,7 +39,7 @@ async def play_music(client, message):
     # Dummy example to play audio (Replace with actual streaming logic)
     audio = AudioPiped("https://sample-videos.com/audio/mp3/wave.mp3")
     await call.start()
-    await call.join_group_call(chat_id, audio, stream_type=StreamType().local_stream)
+    await call.join_group_call(chat_id, audio, stream_type=StreamAudio())
 
 @app.on_callback_query()
 async def handle_callbacks(client, callback_query):
