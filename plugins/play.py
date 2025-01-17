@@ -1,5 +1,5 @@
 from pytgcalls import PyTgCalls
-from pytgcalls.types import StreamType
+from pytgcalls.types import StreamType  # ✅ Fixed Import Path
 from pytgcalls.types.input_stream import AudioPiped
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -22,9 +22,9 @@ async def play_music(client, message):
     # 🎵 New Stylish Now Playing Format
     music_text = f"""
 🎧 **Now Playing:** `{song_name}`
-🎶 **Source:** YouTube
-🎤 **Requested By:** {requested_by}
-📡 **Streaming...**
+🔗 **Source:** YouTube
+👤 **Requested By:** {requested_by}
+📡 **Streaming... Enjoy! 🎶**
 """
 
     buttons = InlineKeyboardMarkup([
