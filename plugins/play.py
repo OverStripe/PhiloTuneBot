@@ -1,5 +1,5 @@
 from pytgcalls import PyTgCalls
-from pytgcalls.types.stream import StreamType  # ✅ Fixed Import Path
+from pytgcalls.types import StreamType
 from pytgcalls.types.input_stream import AudioPiped
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
