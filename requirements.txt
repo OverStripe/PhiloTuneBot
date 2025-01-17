@@ -5,3 +5,4 @@ ffmpeg
 redis
 pymongo
 python-dotenv
+git+https://github.com/pytgcalls/pytgcalls.git  # ✅ Latest PyTgCalls version
