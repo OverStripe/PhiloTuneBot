@@ -1,10 +1,13 @@
-from pytgcalls import PyTgCalls
-from pytgcalls.types.stream import StreamAudio  # ✅ Fixed Import Path
-from pytgcalls.types.input_stream import AudioPiped
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pytgcalls import PyTgCalls
+from pytgcalls.types.stream import StreamAudio
+from pytgcalls.types.input_stream import AudioPiped
+from config import API_ID, API_HASH, BOT_TOKEN
+from utils.downloader import download_song
+from utils.generate_card import generate_card
+import os
 
-# Initialize PyTgCalls client
 app = Client("MusicBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 call = PyTgCalls(app)
 
@@ -14,17 +17,24 @@ async def play_music(client, message):
     if len(message.command) < 2:
         await message.reply("🎵 **Usage:** /play <song_name>")
         return
-    
-    song_name = message.command[1]
-    user = message.from_user
-    requested_by = f"{user.first_name} {user.last_name or ''}"
 
-    # 🎵 New Stylish Now Playing Format
+    query = " ".join(message.command[1:])
+    user = message.from_user
+    requested_by = f"{user.first_name} {user.last_name or ''}".strip()
+
+    await message.reply(f"🔍 Searching `{query}` on YouTube...")
+
+    # Download song and get metadata
+    song_data = download_song(query)
+    card = generate_card(song_data['title'], song_data['artist'], song_data['duration'], requested_by, song_data['thumbnail'])
+
+    # Build message
     music_text = f"""
-🎧 **Now Playing:** `{song_name}`
-🔗 **Source:** YouTube
+🎧 **Now Playing:** `{song_data['title']}`
+🎤 **Artist:** {song_data['artist']}
+⏱ **Duration:** {song_data['duration']}
 👤 **Requested By:** {requested_by}
-📡 **Streaming... Enjoy! 🎶**
+📡 **Streaming From:** YouTube
 """
 
     buttons = InlineKeyboardMarkup([
@@ -34,10 +44,9 @@ async def play_music(client, message):
          InlineKeyboardButton("🔄 Skip", callback_data="skip")]
     ])
 
-    await message.reply(music_text, reply_markup=buttons)
+    await message.reply_photo(photo=open(card, 'rb'), caption=music_text, reply_markup=buttons)
 
-    # Dummy example to play audio (Replace with actual streaming logic)
-    audio = AudioPiped("https://sample-videos.com/audio/mp3/wave.mp3")
+    audio = AudioPiped(song_data['filepath'])
     await call.start()
     await call.join_group_call(chat_id, audio, stream_type=StreamAudio())
 
@@ -54,8 +63,7 @@ async def handle_callbacks(client, callback_query):
         await callback_query.answer("▶ Music Resumed!")
     elif data == "stop":
         await call.leave_group_call(chat_id)
-        await callback_query.message.edit_text("🛑 **Music Stopped!**")
+        await callback_query.answer("⛔ Stopped!")
     elif data == "skip":
-        await callback_query.message.edit_text("🔄 **Skipping Track...**")
-
-app.run()
+        await call.leave_group_call(chat_id)
+        await callback_query.answer("⏭ Skipped! (Implement queue logic)")
