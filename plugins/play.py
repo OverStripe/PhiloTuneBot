@@ -1,17 +1,13 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from pytgcalls import PyTgCalls
 from pytgcalls.types.stream import StreamAudio
 from pytgcalls.types.input_stream import AudioPiped
-from config import API_ID, API_HASH, BOT_TOKEN
-from utils.downloader import download_song
-from utils.generate_card import generate_card
+from .controls import user, call
+from .downloader import download_song
+from .generate_card import generate_card
 import os
 
-app = Client("MusicBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
-call = PyTgCalls(app)
-
-@app.on_message(filters.command("play"))
+@Client.on_message(filters.command("play"))
 async def play_music(client, message):
     chat_id = message.chat.id
     if len(message.command) < 2:
@@ -50,7 +46,7 @@ async def play_music(client, message):
     await call.start()
     await call.join_group_call(chat_id, audio, stream_type=StreamAudio())
 
-@app.on_callback_query()
+@Client.on_callback_query()
 async def handle_callbacks(client, callback_query):
     chat_id = callback_query.message.chat.id
     data = callback_query.data

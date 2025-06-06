@@ -4,8 +4,6 @@ from pytgcalls.types.input_stream import AudioPiped
 from pytgcalls.types.stream import StreamAudio
 from config import SESSION_STRING, API_ID, API_HASH
 from queue import skip_current, get_queue, is_active
-from utils.generate_card import generate_card
-import os
 
 user = Client("VCUser", session_string=SESSION_STRING, api_id=API_ID, api_hash=API_HASH)
 call = PyTgCalls(user)

@@ -1,6 +1,5 @@
 from pyrogram import Client, filters
 from config import OWNER_ID
-from queue import get_queue
 
 # Basic in-memory counters (extend with DB if needed)
 total_songs = 0
